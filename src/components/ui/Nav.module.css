@@ -1,0 +1,46 @@
+/* Fixed, always visible, never scroll-driven (CLAUDE.md §5, restraint 2).
+   No transform, no opacity tween, no hide-on-scroll-down behaviour. */
+.nav {
+  position: fixed;
+  right: var(--page-gutter);
+  bottom: var(--space-3);
+  z-index: var(--z-nav);
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1);
+  background: rgb(10 10 10 / 0.72);
+  backdrop-filter: blur(10px);
+  border: var(--hairline) solid var(--color-line);
+}
+
+.link {
+  padding: 6px var(--space-2);
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-hud);
+  text-transform: uppercase;
+  color: var(--color-text-faint);
+  transition: color var(--dur-snap) var(--ease-snap),
+    background-color var(--dur-snap) var(--ease-snap);
+}
+
+.link:hover,
+.link:focus-visible {
+  color: var(--color-text);
+  background: var(--color-surface-raised);
+}
+
+.isActive {
+  color: var(--color-accent);
+}
+
+@media (max-width: 560px) {
+  .nav {
+    left: var(--page-gutter);
+    right: var(--page-gutter);
+    justify-content: space-between;
+    overflow-x: auto;
+  }
+}

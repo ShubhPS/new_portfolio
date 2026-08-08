@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import { Inter, IBM_Plex_Mono } from "next/font/google";
 import Cursor from "@/components/ui/Cursor";
 import Grain from "@/components/ui/Grain";
+import Nav from "@/components/ui/Nav";
 import "./globals.css";
 
 const clashDisplay = localFont({
@@ -26,8 +27,15 @@ const plexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Portfolio",
-  description: "Personal portfolio.",
+  title: "Shubh Pratap Singh — Agentic AI engineer",
+  description:
+    "I build agentic AI pipelines — systems that plan their own work, argue with it, and finish it unattended. Selected projects, process and experience.",
+  openGraph: {
+    title: "Shubh Pratap Singh — Agentic AI engineer",
+    description:
+      "Agentic AI pipelines, retrieval systems and applied ML. Selected work from Angel One, NSE India and independent projects.",
+    type: "website",
+  },
 };
 
 export const viewport: Viewport = {
@@ -46,7 +54,11 @@ export default function RootLayout({
       className={`${clashDisplay.variable} ${inter.variable} ${plexMono.variable}`}
     >
       <body>
+        <a className="skipLink" href="#work">
+          Skip to work
+        </a>
         {children}
+        <Nav />
         <Grain />
         <Cursor />
       </body>

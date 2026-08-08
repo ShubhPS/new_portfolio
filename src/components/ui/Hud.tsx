@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { ComponentPropsWithoutRef, ReactNode } from "react";
 import styles from "./Hud.module.css";
 
 /**
@@ -67,12 +67,11 @@ export function HudRule({ label, reverse = false, className }: HudRuleProps) {
   );
 }
 
-type HudFrameProps = {
+type HudFrameProps = ComponentPropsWithoutRef<"div"> & {
   children: ReactNode;
   /** Push the brackets outside the element's own box. */
   inset?: boolean;
   active?: boolean;
-  className?: string;
 };
 
 export function HudFrame({
@@ -80,9 +79,11 @@ export function HudFrame({
   inset = false,
   active = false,
   className,
+  ...rest
 }: HudFrameProps) {
   return (
     <div
+      {...rest}
       className={[
         styles.frame,
         inset ? styles.frameInset : "",

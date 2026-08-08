@@ -1,0 +1,85 @@
+.contact {
+  position: relative;
+  border-top: var(--hairline) solid var(--color-line);
+}
+
+.inner {
+  max-width: var(--page-max);
+  margin-inline: auto;
+  padding: var(--space-8) var(--page-gutter) var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.pitch {
+  font-family: var(--font-display);
+  font-weight: var(--weight-display);
+  font-size: var(--text-display);
+  line-height: var(--leading-display);
+  letter-spacing: var(--tracking-display);
+  max-width: 16ch;
+}
+
+.links {
+  display: flex;
+  flex-direction: column;
+  border-top: var(--hairline) solid var(--color-line);
+}
+
+/* Never animated out of position and never scroll-driven (CLAUDE.md §5) —
+   these are the one thing on the page that must always be clickable. */
+.link {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-3);
+  padding-block: var(--space-3);
+  border-bottom: var(--hairline) solid var(--color-line);
+  overflow: hidden;
+}
+
+.linkLabel {
+  font-family: var(--font-display);
+  font-weight: var(--weight-display);
+  font-size: var(--text-title);
+  letter-spacing: var(--tracking-tight);
+  transition: transform var(--dur-snap) var(--ease-snap),
+    color var(--dur-snap) var(--ease-snap);
+}
+
+.link:hover .linkLabel,
+.link:focus-visible .linkLabel {
+  transform: translateX(var(--space-2));
+  color: var(--color-accent);
+}
+
+.linkMeta {
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  letter-spacing: var(--tracking-hud);
+  text-transform: uppercase;
+  color: var(--color-text-faint);
+  transition: color var(--dur-snap) var(--ease-snap);
+}
+
+.link:hover .linkMeta {
+  color: var(--color-text-dim);
+}
+
+.foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  color: var(--color-text-faint);
+  font-size: var(--text-small);
+}
+
+@media (max-width: 560px) {
+  .linkLabel {
+    font-size: var(--text-lead);
+  }
+}

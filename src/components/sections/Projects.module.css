@@ -1,0 +1,110 @@
+.projects {
+  position: relative;
+  max-width: var(--page-max);
+  margin-inline: auto;
+  padding: var(--space-8) var(--page-gutter);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: var(--space-2);
+  /* Shared perspective so neighbouring cards tilt in the same visual space
+     instead of each inventing its own vanishing point. */
+  perspective: 1200px;
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  min-height: 268px;
+  padding: var(--space-3);
+  background: var(--color-surface);
+  transform-style: preserve-3d;
+  will-change: transform;
+  --frame-corner: 15px;
+}
+
+.cardTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-2);
+}
+
+.cardTitle {
+  font-family: var(--font-display);
+  font-weight: var(--weight-display);
+  /* Not --text-title: that scale is built for full-width section headings and
+     wraps to four lines inside a 320px card. */
+  font-size: clamp(1.375rem, 1.5vw, 1.75rem);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+  margin-top: auto;
+  transition: color var(--dur-snap) var(--ease-snap);
+}
+
+.card:hover .cardTitle {
+  color: var(--color-accent);
+}
+
+.cardBody {
+  font-size: var(--text-small);
+  line-height: 1.55;
+  color: var(--color-text-dim);
+}
+
+.metric {
+  color: var(--color-text);
+  font-variant-numeric: tabular-nums;
+}
+
+.stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+  padding-top: var(--space-2);
+  border-top: var(--hairline) solid var(--color-line);
+}
+
+.chip {
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  letter-spacing: 0.08em;
+  color: var(--color-text-faint);
+  padding: 3px var(--space-1);
+  border: var(--hairline) solid var(--color-line);
+}
+
+/* --- Open slots --- */
+
+.cardOpen {
+  background: transparent;
+  border: var(--hairline) dashed var(--color-line);
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 268px;
+}
+
+.cardOpen .cardTitle {
+  color: var(--color-text-faint);
+  margin-top: 0;
+}
+
+.openNote {
+  font-size: var(--text-small);
+  color: var(--color-text-faint);
+  max-width: 26ch;
+}
+
+@media (max-width: 640px) {
+  .card,
+  .cardOpen {
+    min-height: 0;
+  }
+}
