@@ -1,0 +1,205 @@
+/* Temporary token specimen. Deleted when the Hero lands in Phase 4. */
+
+.page {
+  max-width: var(--page-max);
+  margin-inline: auto;
+  padding: var(--space-7) var(--page-gutter) var(--space-9);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.headerTitle {
+  font-size: var(--text-display);
+  line-height: var(--leading-display);
+}
+
+.headerNote {
+  color: var(--color-text-dim);
+  max-width: var(--measure);
+}
+
+.block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.blockHead {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* --- Color --- */
+
+.swatches {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: var(--space-2);
+}
+
+.swatch {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-2);
+  background: var(--color-surface);
+  border: var(--hairline) solid var(--color-line);
+}
+
+.swatchChip {
+  height: 76px;
+  border: var(--hairline) solid var(--color-line);
+}
+
+.swatchMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  letter-spacing: var(--tracking-hud);
+  text-transform: uppercase;
+}
+
+.swatchValue {
+  color: var(--color-text-faint);
+}
+
+/* --- Type --- */
+
+.typeRow {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding-bottom: var(--space-3);
+  border-bottom: var(--hairline) solid var(--color-line);
+}
+
+.typeSpecimen {
+  font-family: var(--font-display);
+  font-weight: var(--weight-display);
+  letter-spacing: var(--tracking-display);
+  line-height: var(--leading-display);
+}
+
+.typeHero {
+  font-size: var(--text-hero);
+}
+
+.typeDisplay {
+  font-size: var(--text-display);
+}
+
+.typeTitle {
+  font-size: var(--text-title);
+}
+
+.typeLead {
+  font-family: var(--font-body);
+  font-size: var(--text-lead);
+  font-weight: var(--weight-body);
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-tight);
+  color: var(--color-text-dim);
+  max-width: var(--measure);
+}
+
+.typeBody {
+  font-family: var(--font-body);
+  max-width: var(--measure);
+  color: var(--color-text-dim);
+}
+
+/* --- Spacing --- */
+
+.spaceRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.spaceBar {
+  height: 14px;
+  background: var(--color-accent);
+  opacity: 0.55;
+}
+
+.spaceLabel {
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  letter-spacing: var(--tracking-hud);
+  color: var(--color-text-faint);
+  min-width: 108px;
+}
+
+/* --- HUD + motion --- */
+
+.hudGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--space-3);
+}
+
+.hudCell {
+  padding: var(--space-4);
+  background: var(--color-surface);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  --frame-corner: 16px;
+}
+
+.hudCellLabel {
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  letter-spacing: var(--tracking-hud);
+  text-transform: uppercase;
+  color: var(--color-text-faint);
+}
+
+.motionRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+/* Hover proves the easing token, not just its numeric value. */
+.motionChip {
+  padding: var(--space-2) var(--space-3);
+  border: var(--hairline) solid var(--color-line);
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  letter-spacing: var(--tracking-hud);
+  text-transform: uppercase;
+  color: var(--color-text-dim);
+  transform: translateY(0);
+}
+
+.motionSnap {
+  transition: transform var(--dur-snap) var(--ease-snap),
+    border-color var(--dur-snap) var(--ease-snap), color var(--dur-snap) var(--ease-snap);
+}
+
+.motionQuad {
+  transition: transform var(--dur-ui) var(--ease-quad),
+    border-color var(--dur-ui) var(--ease-quad), color var(--dur-ui) var(--ease-quad);
+}
+
+.motionScene {
+  transition: transform var(--dur-scene) var(--ease-scene),
+    border-color var(--dur-scene) var(--ease-scene), color var(--dur-scene) var(--ease-scene);
+}
+
+.motionChip:hover {
+  transform: translateY(-6px);
+  border-color: var(--color-accent-line);
+  color: var(--color-text);
+}
