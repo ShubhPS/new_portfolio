@@ -3,10 +3,10 @@
 Single-page, scroll-driven personal site. Dark, motion-led, built so the
 interaction is part of the work rather than decoration on top of it.
 
-<h2 href="https://new-portfolio-ecru-psi.vercel.app/" target="_blank">
+<h2><a href="https://new-portfolio-ecru-psi.vercel.app/" target="_blank">
   <button>🌐 WEBSITE : Live</button>
-</h2>
-
+</a></h2>
+[![Live Site](https://shields.io)](https://new-portfolio-ecru-psi.vercel.app/)
 
 ## Stack
 
