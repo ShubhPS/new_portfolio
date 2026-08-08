@@ -18,6 +18,8 @@ type Project = {
   year: string;
   body: React.ReactNode;
   stack: string[];
+  /** "shipped" reached real users; "building" has not. Never blur the two. */
+  status: "shipped" | "building";
 };
 
 const projects: Project[] = [
@@ -34,6 +36,7 @@ const projects: Project[] = [
       </>
     ),
     stack: ["LangGraph", "GPT-4", "ChromaDB", "RAG", "Python"],
+    status: "shipped",
   },
   {
     title: "AlzDx",
@@ -47,6 +50,7 @@ const projects: Project[] = [
       </>
     ),
     stack: ["TensorFlow", "ResNet50", "Flask", "Firebase"],
+    status: "shipped",
   },
   {
     title: "YOLOv3 for Small Objects",
@@ -60,10 +64,51 @@ const projects: Project[] = [
       </>
     ),
     stack: ["PyTorch", "OpenCV"],
+    status: "shipped",
+  },
+  {
+    title: "Self-correcting SQL agent",
+    year: "2026",
+    body: (
+      <>
+        Natural language in, verified SQL out. A writer agent drafts the query,
+        a verifier runs it against the planner and repairs anything that fails
+        or returns nonsense — so the model never hands a person a number it has
+        not checked.
+      </>
+    ),
+    stack: ["LangGraph", "Postgres", "Claude", "Pydantic"],
+    status: "building",
+  },
+  {
+    title: "Research swarm",
+    year: "2026",
+    body: (
+      <>
+        Parallel retrieval agents read across arXiv and the open web, then a
+        synthesiser reconciles them — explicitly surfacing where two sources
+        disagree instead of averaging the conflict away.
+      </>
+    ),
+    stack: ["LangGraph", "ChromaDB", "arXiv API", "GPT-4"],
+    status: "building",
+  },
+  {
+    title: "Regression harness for agents",
+    year: "2026",
+    body: (
+      <>
+        Agents drift silently when the model underneath them changes. This
+        replays recorded traces against each new version, scores them on a
+        rubric, and fails the build when behaviour moves.
+      </>
+    ),
+    stack: ["Python", "pytest", "LangSmith"],
+    status: "building",
   },
 ];
 
-const OPEN_SLOTS = 6;
+const OPEN_SLOTS = 3;
 
 /**
  * Cursor-proximity tilt (CLAUDE.md §5, signature moment 2).
@@ -175,22 +220,31 @@ export default function Projects() {
         index={2}
         label="projects"
         title="Things I built to see if they'd hold"
-        note="Nine slots. Three are filled with work that shipped; the rest are waiting on write-ups rather than on the work itself."
+        note="Blue shipped and met real users. Violet is still in build — listed because the interesting part is what they're trying, not that they're finished."
       />
 
       <div className={styles.grid} ref={gridRef}>
         {projects.map((project, i) => (
           <HudFrame
             key={project.title}
-            className={styles.card}
+            className={`${styles.card} ${
+              project.status === "building" ? styles.cardBuilding : ""
+            }`}
             data-card
             data-cursor="view"
-            data-cursor-label="Read"
+            data-cursor-label={project.status === "shipped" ? "Read" : "Preview"}
           >
             <div className={styles.cardTop}>
-              <HudTag index={i + 1} accent brackets={false}>
-                project
-              </HudTag>
+              <span
+                className={
+                  project.status === "shipped"
+                    ? styles.statusShipped
+                    : styles.statusBuilding
+                }
+              >
+                {String(i + 1).padStart(2, "0")}{" "}
+                {project.status === "shipped" ? "shipped" : "in build"}
+              </span>
               <HudTag brackets={false}>{project.year}</HudTag>
             </div>
             <h3 className={styles.cardTitle}>{project.title}</h3>

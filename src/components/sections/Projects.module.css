@@ -37,6 +37,34 @@
   gap: var(--space-2);
 }
 
+/* Blue for work that reached users, violet for work that has not. The colour
+   carries the claim, so the page never overstates what shipped. */
+.statusShipped,
+.statusBuilding {
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-hud);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.statusShipped {
+  color: var(--color-accent);
+}
+
+.statusBuilding {
+  color: var(--color-accent-2);
+}
+
+.cardBuilding {
+  background: linear-gradient(
+    180deg,
+    var(--color-surface),
+    rgb(180 92 255 / 0.05)
+  );
+}
+
 .cardTitle {
   font-family: var(--font-display);
   font-weight: var(--weight-display);

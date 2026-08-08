@@ -25,6 +25,15 @@
   --color-accent-wash: rgb(61 124 255 / 0.14);
   --color-accent-line: rgb(61 124 255 / 0.45);
 
+  /* Second signal. Added at the owner's request on top of §4's single-accent
+     rule, and kept semantic rather than decorative: violet marks unshipped or
+     in-progress work wherever blue marks something live. */
+  --color-accent-2: #b45cff;
+  --color-accent-2-wash: rgb(180 92 255 / 0.13);
+  --color-accent-2-line: rgb(180 92 255 / 0.42);
+
+  --color-warm: #ffb26b;
+
   /* --- Typography --- */
   --font-display: var(--font-clash), "Arial Black", sans-serif;
   --font-body: var(--font-inter), system-ui, sans-serif;

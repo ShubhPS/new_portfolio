@@ -68,3 +68,71 @@ export function damp(current: number, target: number, factor: number, dt: number
 export function clamp(value: number, min: number, max: number) {
   return Math.min(Math.max(value, min), max);
 }
+
+const INTRO_KEY = "intro-played";
+
+/** Once per session — a landing animation on every navigation is a toll gate. */
+export function shouldPlayIntro(): boolean {
+  if (typeof window === "undefined") return false;
+  try {
+    return sessionStorage.getItem(INTRO_KEY) !== "1";
+  } catch {
+    return true;
+  }
+}
+
+export function markIntroPlayed() {
+  try {
+    sessionStorage.setItem(INTRO_KEY, "1");
+  } catch {
+    // Private mode — the intro simply plays again next time.
+  }
+}
+
+/**
+ * Magnetic pull toward the pointer for elements marked [data-magnetic]
+ * inside `root`. One delegated listener drives the whole group.
+ * Returns a cleanup function.
+ */
+export function attachMagnetic(
+  root: HTMLElement,
+  gsapInstance: typeof import("gsap").gsap,
+  radius = 90,
+  strength = 0.32
+) {
+  const items = Array.from(
+    root.querySelectorAll<HTMLElement>("[data-magnetic]")
+  ).map((el) => ({
+    el,
+    x: gsapInstance.quickTo(el, "x", { duration: 0.4, ease: "expo.out" }),
+    y: gsapInstance.quickTo(el, "y", { duration: 0.4, ease: "expo.out" }),
+  }));
+
+  const onMove = (event: PointerEvent) => {
+    for (const item of items) {
+      const rect = item.el.getBoundingClientRect();
+      const dx = event.clientX - (rect.left + rect.width / 2);
+      const dy = event.clientY - (rect.top + rect.height / 2);
+      const distance = Math.hypot(dx, dy);
+      const pull = distance < radius ? 1 - distance / radius : 0;
+      item.x(dx * strength * pull);
+      item.y(dy * strength * pull);
+    }
+  };
+
+  const reset = () => {
+    for (const item of items) {
+      item.x(0);
+      item.y(0);
+    }
+  };
+
+  window.addEventListener("pointermove", onMove, { passive: true });
+  document.addEventListener("pointerleave", reset);
+
+  return () => {
+    window.removeEventListener("pointermove", onMove);
+    document.removeEventListener("pointerleave", reset);
+    reset();
+  };
+}

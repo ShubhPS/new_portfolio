@@ -1,16 +1,16 @@
 "use client";
 
-import { Fragment, useRef } from "react";
+import { useRef } from "react";
 import { gsap, ScrollTrigger, useGSAP } from "@/lib/gsap";
-import { duration, ease, useReducedMotion } from "@/lib/animation-utils";
-import { HudFrame, HudTag } from "@/components/ui/Hud";
+import {
+  duration,
+  ease,
+  shouldPlayIntro,
+  useReducedMotion,
+} from "@/lib/animation-utils";
+import { HudTag } from "@/components/ui/Hud";
+import RetrievalField from "@/components/ui/RetrievalField";
 import styles from "./Hero.module.css";
-
-const agents = [
-  { role: "Planner", desc: "Decides what the run needs, and in what order." },
-  { role: "Reviewer", desc: "Argues with the draft until it survives its own sources." },
-  { role: "Writer", desc: "Ships the thing a person actually reads." },
-];
 
 /**
  * Hero pin-and-transform (CLAUDE.md §5, signature moment 3).
@@ -31,7 +31,7 @@ function useHeroAnimation(reducedMotion: boolean) {
       const headline = root.querySelector<HTMLElement>("[data-headline]");
       const headlineWrap = root.querySelector<HTMLElement>("[data-headline-wrap]");
       const pipeline = root.querySelector<HTMLElement>("[data-pipeline]");
-      const nodes = root.querySelectorAll<HTMLElement>(`.${styles.node}`);
+      const nodes = root.querySelectorAll<HTMLElement>("[data-reveal]");
       const cue = root.querySelector<HTMLElement>("[data-cue]");
       const bar = root.querySelector<HTMLElement>("[data-topbar]");
       const progressFill = root.querySelector<HTMLElement>("[data-progress-fill]");
@@ -46,8 +46,11 @@ function useHeroAnimation(reducedMotion: boolean) {
       gsap.set(pipeline, { clipPath: "inset(0% 0% 100% 0%)" });
       gsap.set(nodes, { yPercent: 18, opacity: 0 });
 
+      // Wait out the landing sequence rather than playing underneath it.
+      const introDelay = shouldPlayIntro() ? 1.35 : 0;
+
       gsap
-        .timeline({ defaults: { ease: ease.snap } })
+        .timeline({ defaults: { ease: ease.snap }, delay: introDelay })
         .from(bar, { opacity: 0, y: -12, duration: duration.ui })
         .from(
           lines,
@@ -59,7 +62,15 @@ function useHeroAnimation(reducedMotion: boolean) {
           },
           0.05
         )
-        .from(cue, { opacity: 0, duration: duration.ui }, "-=0.35");
+        // fromTo on both ends: this element's opacity is also driven by the
+        // scrub below, and a bare from() resolves its end value against
+        // whatever that happens to have set.
+        .fromTo(
+          cue,
+          { opacity: 0 },
+          { opacity: 1, duration: duration.ui },
+          "-=0.35"
+        );
 
       const scrub = gsap.timeline({
         scrollTrigger: {
@@ -126,7 +137,7 @@ export default function Hero() {
     >
       <div className={styles.stage}>
         <div className={styles.topBar} data-topbar>
-          <HudTag accent>Shubh Pratap Singh</HudTag>
+          <HudTag accent>AI Engineer · Navi Mumbai</HudTag>
           <div className={styles.readout}>
             <HudTag brackets={false}>pin</HudTag>
             <span className={styles.readoutTrack} aria-hidden="true">
@@ -142,43 +153,26 @@ export default function Hero() {
           <h1 className={styles.headline} data-headline>
             <span className={styles.line}>
               <span className={styles.lineInner} data-line>
-                Systems
+                Shubh
               </span>
             </span>
             <span className={styles.line}>
               <span className={styles.lineInner} data-line>
-                that run
-              </span>
-            </span>
-            <span className={styles.line}>
-              <span className={styles.lineInner} data-line>
-                themselves
+                Pratap Singh
               </span>
             </span>
           </h1>
         </div>
 
         <div className={styles.pipeline} data-pipeline>
-          <div className={styles.pipelineNodes}>
-            {agents.map((agent, i) => (
-              <Fragment key={agent.role}>
-                {i > 0 && (
-                  <span className={styles.connector} aria-hidden="true" />
-                )}
-                <HudFrame className={styles.node}>
-                  <span className={styles.nodeRole}>{agent.role}</span>
-                  <span className={styles.nodeDesc}>{agent.desc}</span>
-                </HudFrame>
-              </Fragment>
-            ))}
+          <div data-reveal>
+            <RetrievalField />
           </div>
-          <div className={styles.pipelineFoot}>
+          <div className={styles.pipelineFoot} data-reveal>
             <p className={styles.lead}>
-              I build agentic AI pipelines — systems that plan their own work,
-              argue with it, and{" "}
-              <span className={styles.leadStrong}>
-                finish it while I&rsquo;m asleep.
-              </span>
+              I build agentic AI — retrieval systems, multi-agent pipelines, and
+              the unglamorous plumbing that lets them{" "}
+              <span className={styles.leadStrong}>run without a babysitter.</span>
             </p>
             <HudTag index={1}>hero</HudTag>
           </div>

@@ -1,0 +1,66 @@
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: 150;
+  display: grid;
+  place-items: center;
+  background: var(--color-bg);
+  /* Clipped away rather than faded — a wipe hands off to the hero instead
+     of dissolving into it. */
+  clip-path: inset(0 0 0 0);
+}
+
+.mark {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.glyph {
+  display: block;
+  width: 54px;
+  height: 54px;
+  overflow: visible;
+}
+
+.node {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.edge {
+  stroke: var(--color-text);
+  stroke-opacity: 0.45;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+  /* Path is ~56 units; dashing it lets the line draw without DrawSVGPlugin. */
+  stroke-dasharray: 60;
+  stroke-dashoffset: 0;
+}
+
+.name {
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-hud);
+  text-transform: uppercase;
+  color: var(--color-text-faint);
+}
+
+.track {
+  width: 116px;
+  height: var(--hairline);
+  background: var(--color-line);
+  overflow: hidden;
+}
+
+.fill {
+  display: block;
+  height: 100%;
+  background: var(--color-accent);
+  transform: scaleX(0);
+  transform-origin: left center;
+}

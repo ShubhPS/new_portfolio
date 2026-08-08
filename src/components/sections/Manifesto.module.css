@@ -42,6 +42,44 @@
   color: var(--color-text-faint);
 }
 
+.personal {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--space-5);
+  padding-top: var(--space-5);
+  border-top: var(--hairline) solid var(--color-line);
+}
+
+.personalLead {
+  font-size: var(--text-lead);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-text);
+  max-width: 40ch;
+}
+
+.personalBody {
+  color: var(--color-text-dim);
+  line-height: var(--leading-body);
+  max-width: 52ch;
+}
+
+.supportDetail {
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  line-height: 1.6;
+  letter-spacing: 0.04em;
+  color: var(--color-text-faint);
+  max-width: 34ch;
+}
+
+@media (max-width: 720px) {
+  .personal {
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+  }
+}
+
 .support {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));

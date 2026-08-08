@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import { Inter, IBM_Plex_Mono } from "next/font/google";
 import Cursor from "@/components/ui/Cursor";
 import Grain from "@/components/ui/Grain";
+import Intro from "@/components/ui/Intro";
 import Nav from "@/components/ui/Nav";
 import "./globals.css";
 
@@ -61,6 +62,7 @@ export default function RootLayout({
         <Nav />
         <Grain />
         <Cursor />
+        <Intro />
       </body>
     </html>
   );

@@ -1,6 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { gsap, useGSAP } from "@/lib/gsap";
+import {
+  attachMagnetic,
+  usePointerFine,
+  useReducedMotion,
+} from "@/lib/animation-utils";
 import styles from "./Nav.module.css";
 
 const sections = [
@@ -14,6 +20,19 @@ const sections = [
 
 export default function Nav() {
   const [active, setActive] = useState("top");
+  const navRef = useRef<HTMLElement>(null);
+  const pointerFine = usePointerFine();
+  const reducedMotion = useReducedMotion();
+
+  useGSAP(
+    () => {
+      const nav = navRef.current;
+      if (!nav || !pointerFine || reducedMotion) return;
+      // Small radius: the pull should be felt on approach, not across the page.
+      return attachMagnetic(nav, gsap, 70, 0.28);
+    },
+    { dependencies: [pointerFine, reducedMotion] }
+  );
 
   useEffect(() => {
     // IntersectionObserver rather than a scroll handler: no work on the main
@@ -36,7 +55,7 @@ export default function Nav() {
   }, []);
 
   return (
-    <nav className={styles.nav} aria-label="Sections">
+    <nav className={styles.nav} aria-label="Sections" ref={navRef}>
       {sections.map((section) => (
         <a
           key={section.id}
@@ -45,6 +64,7 @@ export default function Nav() {
           }`}
           href={`#${section.id}`}
           data-cursor="link"
+          data-magnetic
           aria-current={active === section.id ? "true" : undefined}
         >
           {section.label}
