@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { gsap, useGSAP } from "@/lib/gsap";
 import { duration, ease, useReducedMotion } from "@/lib/animation-utils";
 import { HudTag } from "@/components/ui/Hud";
+import Scene3D from "@/components/ui/Scene3D";
 import styles from "./Manifesto.module.css";
 
 const statement = [
@@ -88,18 +89,23 @@ export default function Manifesto() {
   return (
     <section className={styles.manifesto} ref={rootRef} id="manifesto">
       <div className={styles.inner}>
-        <p className={styles.statement}>
-          {statement.map((chunk) => (
-            <span key={chunk.text} className={styles.word}>
-              <span
-                className={`${styles.wordInner} ${chunk.dim ? styles.dim : ""}`}
-                data-word
-              >
-                {chunk.text}
-              </span>{" "}
-            </span>
-          ))}
-        </p>
+        <div className={styles.top}>
+          <p className={styles.statement}>
+            {statement.map((chunk) => (
+              <span key={chunk.text} className={styles.word}>
+                <span
+                  className={`${styles.wordInner} ${chunk.dim ? styles.dim : ""}`}
+                  data-word
+                >
+                  {chunk.text}
+                </span>{" "}
+              </span>
+            ))}
+          </p>
+          <div className={styles.sceneSlot}>
+            <Scene3D />
+          </div>
+        </div>
 
         <div className={styles.personal} data-support>
           <p className={styles.personalLead}>

@@ -46,8 +46,9 @@ function useHeroAnimation(reducedMotion: boolean) {
       gsap.set(pipeline, { clipPath: "inset(0% 0% 100% 0%)" });
       gsap.set(nodes, { yPercent: 18, opacity: 0 });
 
-      // Wait out the landing sequence rather than playing underneath it.
-      const introDelay = shouldPlayIntro() ? 1.35 : 0;
+      // Starts while the curtain is still lifting, not after it — the overlap
+      // is what makes the landing read as one move into the page.
+      const introDelay = shouldPlayIntro() ? 0.82 : 0;
 
       gsap
         .timeline({ defaults: { ease: ease.snap }, delay: introDelay })

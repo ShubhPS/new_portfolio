@@ -16,6 +16,29 @@
   gap: var(--space-6);
 }
 
+.top {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+  gap: var(--space-6);
+  align-items: center;
+}
+
+.sceneSlot {
+  position: relative;
+  width: 100%;
+}
+
+@media (max-width: 900px) {
+  .top {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+
+  .sceneSlot {
+    max-width: 360px;
+  }
+}
+
 .statement {
   font-family: var(--font-display);
   font-weight: var(--weight-display);

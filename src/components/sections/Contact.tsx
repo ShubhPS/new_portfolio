@@ -1,9 +1,10 @@
 "use client";
 
 import { useRef } from "react";
+import Image from "next/image";
 import { gsap, useGSAP } from "@/lib/gsap";
 import { duration, ease, useReducedMotion } from "@/lib/animation-utils";
-import { HudTag } from "@/components/ui/Hud";
+import { HudFrame, HudTag } from "@/components/ui/Hud";
 import SectionHead from "@/components/ui/SectionHead";
 import styles from "./Contact.module.css";
 
@@ -57,21 +58,42 @@ export default function Contact() {
           note="Open to internships and collaboration on agentic systems, retrieval and applied ML."
         />
 
-        <div className={styles.links}>
-          {links.map((link) => (
-            <a
-              key={link.href}
-              className={styles.link}
-              href={link.href}
-              data-cursor="link"
-              {...(link.href.startsWith("http")
-                ? { target: "_blank", rel: "noreferrer noopener" }
-                : {})}
-            >
-              <span className={styles.linkLabel}>{link.label}</span>
-              <span className={styles.linkMeta}>{link.meta}</span>
-            </a>
-          ))}
+        <div className={styles.body}>
+          <div>
+            <HudFrame className={styles.portrait}>
+              <Image
+                className={styles.portraitImage}
+                src="/images/professionalpic.jpg"
+                alt="Shubh Pratap Singh"
+                fill
+                sizes="(max-width: 780px) 260px, 320px"
+              />
+              <span className={styles.portraitTint} aria-hidden="true" />
+            </HudFrame>
+            <div className={styles.portraitCaption}>
+              <HudTag accent brackets={false}>
+                Shubh Pratap Singh
+              </HudTag>
+              <HudTag brackets={false}>2026</HudTag>
+            </div>
+          </div>
+
+          <div className={styles.links}>
+            {links.map((link) => (
+              <a
+                key={link.href}
+                className={styles.link}
+                href={link.href}
+                data-cursor="link"
+                {...(link.href.startsWith("http")
+                  ? { target: "_blank", rel: "noreferrer noopener" }
+                  : {})}
+              >
+                <span className={styles.linkLabel}>{link.label}</span>
+                <span className={styles.linkMeta}>{link.meta}</span>
+              </a>
+            ))}
+          </div>
         </div>
 
         <div className={styles.foot}>

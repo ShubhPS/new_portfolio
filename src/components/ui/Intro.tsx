@@ -43,27 +43,39 @@ export default function Intro() {
         ScrollTrigger.refresh();
       };
 
+      // Overlapping, not sequential. The mark leaves and the curtain lifts
+      // while the hero is already animating underneath, so the two read as one
+      // continuous move rather than a loading screen that ends.
       gsap
         .timeline({ onComplete: finish })
         .from(`.${styles.node}`, {
           scale: 0,
           opacity: 0,
-          duration: 0.42,
+          duration: 0.38,
           ease: ease.snap,
-          stagger: 0.07,
+          stagger: 0.06,
         })
         .from(
           `.${styles.edge}`,
-          { strokeDashoffset: 60, duration: 0.34, ease: "none" },
-          0.2
+          { strokeDashoffset: 60, duration: 0.3, ease: "none" },
+          0.15
         )
-        .from(`.${styles.name}`, { opacity: 0, y: 8, duration: 0.3 }, 0.25)
-        .to(`.${styles.fill}`, { scaleX: 1, duration: 0.5, ease: "power2.inOut" }, 0.3)
-        .to(root, {
-          clipPath: "inset(0 0 100% 0)",
-          duration: 0.62,
-          ease: "power3.inOut",
-        });
+        .from(`.${styles.name}`, { opacity: 0, y: 8, duration: 0.28 }, 0.2)
+        .to(
+          `.${styles.fill}`,
+          { scaleX: 1, duration: 0.44, ease: "power2.inOut" },
+          0.22
+        )
+        .to(
+          `.${styles.mark}`,
+          { y: -30, opacity: 0, duration: 0.4, ease: "power2.in" },
+          0.68
+        )
+        .to(
+          root,
+          { clipPath: "inset(0 0 100% 0)", duration: 0.58, ease: "power3.inOut" },
+          0.72
+        );
 
       return () => {
         document.body.style.overflow = "";

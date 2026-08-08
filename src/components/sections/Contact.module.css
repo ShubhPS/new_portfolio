@@ -21,10 +21,83 @@
   max-width: 16ch;
 }
 
+.body {
+  display: grid;
+  grid-template-columns: minmax(0, 320px) minmax(0, 1fr);
+  gap: var(--space-6);
+  align-items: start;
+}
+
+.portrait {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: var(--color-surface);
+  --frame-corner: 18px;
+}
+
+/* The filled image would otherwise paint over the frame's corner brackets. */
+.portrait::before,
+.portrait::after {
+  z-index: 2;
+}
+
+.portraitImage {
+  object-fit: cover;
+  /* Desaturated at rest so the page's palette holds, warming on approach —
+     the photo is the one place a person appears, so it earns the reveal. */
+  filter: grayscale(1) contrast(1.06) brightness(0.92);
+  transition: filter var(--dur-ui) var(--ease-snap),
+    transform var(--dur-scene) var(--ease-snap);
+}
+
+.portrait:hover .portraitImage {
+  filter: grayscale(0) contrast(1) brightness(1);
+  transform: scale(1.03);
+}
+
+.portraitTint {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    200deg,
+    rgb(61 124 255 / 0.16),
+    transparent 55%,
+    rgb(180 92 255 / 0.14)
+  );
+  mix-blend-mode: screen;
+  transition: opacity var(--dur-ui) var(--ease-snap);
+}
+
+.portrait:hover .portraitTint {
+  opacity: 0.35;
+}
+
+.portraitCaption {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-2);
+  padding-top: var(--space-2);
+}
+
 .links {
   display: flex;
   flex-direction: column;
   border-top: var(--hairline) solid var(--color-line);
+}
+
+@media (max-width: 780px) {
+  .body {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+
+  .portrait {
+    max-width: 260px;
+  }
 }
 
 /* Never animated out of position and never scroll-driven (CLAUDE.md §5) —
