@@ -1,19 +1,22 @@
 {
   "permissions": {
     "allow": [
+      "mcp__plugin_chrome-devtools-mcp_chrome-devtools",
       "PowerShell(npm *)",
-      "PowerShell(New-Item *)",
-      "Bash(curl -s -o /dev/null -w \"HTTP %{http_code}\\\\n\" http://localhost:3000)",
-      "Bash(curl -s http://localhost:3000)",
+      "PowerShell(npm run *)",
       "PowerShell(git *)",
+      "PowerShell(python *)",
+      "PowerShell(New-Item *)",
       "PowerShell(Copy-Item *)",
       "PowerShell(Remove-Item *)",
-      "mcp__plugin_chrome-devtools-mcp_chrome-devtools__new_page",
-      "mcp__plugin_chrome-devtools-mcp_chrome-devtools__resize_page",
-      "mcp__plugin_chrome-devtools-mcp_chrome-devtools__take_screenshot",
-      "mcp__plugin_chrome-devtools-mcp_chrome-devtools__list_console_messages",
-      "mcp__plugin_chrome-devtools-mcp_chrome-devtools__list_network_requests",
-      "PowerShell(npm run *)"
+      "PowerShell(Get-ChildItem *)",
+      "PowerShell(Get-Content *)",
+      "PowerShell(Expand-Archive *)",
+      "PowerShell(Test-Path *)",
+      "Bash(curl *)",
+      "Bash(cd *)",
+      "Bash(until *)",
+      "Bash(ls *)"
     ]
   }
 }

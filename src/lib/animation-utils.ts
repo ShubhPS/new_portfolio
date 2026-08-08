@@ -17,7 +17,7 @@ export const ease = {
 export const duration = {
   micro: 0.18,
   snap: 0.28,
-  ui: 0.4,
+  ui: 0.32,
   scene: 0.9,
   sceneLong: 1.4,
 } as const;

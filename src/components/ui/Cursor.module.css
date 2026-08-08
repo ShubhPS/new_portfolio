@@ -1,0 +1,76 @@
+.cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: var(--z-cursor);
+  pointer-events: none;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  will-change: transform;
+}
+
+.ring {
+  position: absolute;
+  inset: 0;
+  border: var(--hairline) solid var(--color-line-strong);
+  border-radius: 50%;
+  transition: transform var(--dur-snap) var(--ease-snap),
+    background-color var(--dur-snap) var(--ease-snap),
+    border-color var(--dur-snap) var(--ease-snap);
+}
+
+.dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  transition: transform var(--dur-snap) var(--ease-snap);
+}
+
+.label {
+  position: absolute;
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-hud);
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--color-text);
+  opacity: 0;
+  transform: translateY(5px);
+  transition: opacity var(--dur-snap) var(--ease-snap),
+    transform var(--dur-snap) var(--ease-snap);
+}
+
+/* Context states — driven by [data-cursor] on whatever is hovered. */
+
+.isView .ring {
+  transform: scale(2.7);
+  background: var(--color-accent-wash);
+  border-color: var(--color-accent-line);
+}
+
+.isView .dot {
+  transform: scale(0);
+}
+
+.isView .label {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.isLink .ring {
+  transform: scale(1.7);
+  border-color: var(--color-accent-line);
+}
+
+.isLink .dot {
+  transform: scale(1.6);
+}
+
+.isPressed .ring {
+  transform: scale(1.25);
+  background: var(--color-accent-wash);
+}

@@ -10,3 +10,7 @@ build/
 next-env.d.ts
 
 .DS_Store
+
+# Source resume — contains a personal phone number; kept out of the repo
+# so it can't reach a public remote or the deployed build by accident.
+*Resume*.pdf

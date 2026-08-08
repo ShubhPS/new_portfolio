@@ -75,8 +75,8 @@
      CSS equivalents of the GSAP eases in lib/animation-utils.ts.
      Keep the two in sync — same names, same curves. */
   --dur-micro: 180ms;
-  --dur-snap: 280ms;
-  --dur-ui: 400ms;
+  --dur-snap: 280ms; /* default for anything hover- or pointer-driven */
+  --dur-ui: 320ms;
   --dur-scene: 900ms;
   --dur-scene-long: 1400ms;
 
@@ -177,6 +177,16 @@ ul,
 ol {
   list-style: none;
   padding: 0;
+}
+
+/* The custom cursor sets this on <html> only when it is actually active
+   (fine pointer, motion allowed), so touch and reduced-motion users keep
+   their native cursor rather than losing it to a component that isn't there. */
+[data-custom-cursor="true"],
+[data-custom-cursor="true"] a,
+[data-custom-cursor="true"] button,
+[data-custom-cursor="true"] [data-cursor] {
+  cursor: none;
 }
 
 /* Keyboard focus stays visible everywhere — the accent is the

@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import { Inter, IBM_Plex_Mono } from "next/font/google";
+import Cursor from "@/components/ui/Cursor";
 import Grain from "@/components/ui/Grain";
 import "./globals.css";
 
@@ -47,6 +48,7 @@ export default function RootLayout({
       <body>
         {children}
         <Grain />
+        <Cursor />
       </body>
     </html>
   );
