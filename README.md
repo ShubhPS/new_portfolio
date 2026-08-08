@@ -3,7 +3,11 @@
 Single-page, scroll-driven personal site. Dark, motion-led, built so the
 interaction is part of the work rather than decoration on top of it.
 
-**Live:** (https://new-portfolio-ecru-psi.vercel.app/)
+<a href="[https://mysiteurl.cantsharewithyou](https://new-portfolio-ecru-psi.vercel.app/)" target="_blank">
+  <button>🌐 Live: Click Here</button>
+</a>
+
+**Live:**[Click Here](https://new-portfolio-ecru-psi.vercel.app/)
 
 ## Stack
 
