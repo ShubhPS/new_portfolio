@@ -98,7 +98,7 @@ export default function Contact() {
 
         <div className={styles.foot}>
           <HudTag brackets={false}>Navi Mumbai, India</HudTag>
-          <span>Built with Next.js and GSAP.</span>
+          <HudTag brackets={false}>© 2026</HudTag>
         </div>
       </div>
     </footer>

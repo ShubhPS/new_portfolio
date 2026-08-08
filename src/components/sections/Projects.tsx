@@ -146,9 +146,16 @@ function useCardTilt(enabled: boolean) {
 
       const MAX_TILT = 7;
 
+      // Nine rect reads per pointermove is nine forced reflows on a 120Hz
+      // trackpad. The boxes only move on scroll and resize, so cache them.
+      let boxes = setters.map(({ card }) => card.getBoundingClientRect());
+      const measure = () => {
+        boxes = setters.map(({ card }) => card.getBoundingClientRect());
+      };
+
       const onMove = (event: PointerEvent) => {
-        for (const { card, rotX, rotY, lift } of setters) {
-          const rect = card.getBoundingClientRect();
+        setters.forEach(({ rotX, rotY, lift }, i) => {
+          const rect = boxes[i];
           const dx = (event.clientX - (rect.left + rect.width / 2)) / rect.width;
           const dy = (event.clientY - (rect.top + rect.height / 2)) / rect.height;
           // Proximity, not just hover: cards near the pointer lean toward it,
@@ -157,7 +164,7 @@ function useCardTilt(enabled: boolean) {
           rotY(clamp(dx, -1, 1) * MAX_TILT * proximity);
           rotX(clamp(-dy, -1, 1) * MAX_TILT * proximity);
           lift(28 * proximity);
-        }
+        });
       };
 
       const onLeave = () => {
@@ -169,11 +176,15 @@ function useCardTilt(enabled: boolean) {
       };
 
       window.addEventListener("pointermove", onMove, { passive: true });
+      window.addEventListener("scroll", measure, { passive: true });
+      window.addEventListener("resize", measure);
       grid.addEventListener("pointerleave", onLeave);
       document.addEventListener("pointerleave", onLeave);
 
       return () => {
         window.removeEventListener("pointermove", onMove);
+        window.removeEventListener("scroll", measure);
+        window.removeEventListener("resize", measure);
         grid.removeEventListener("pointerleave", onLeave);
         document.removeEventListener("pointerleave", onLeave);
       };
@@ -232,7 +243,9 @@ export default function Projects() {
             }`}
             data-card
             data-cursor="view"
-            data-cursor-label={project.status === "shipped" ? "Read" : "Preview"}
+            /* Labels the state, not an action — these cards have nowhere to
+               navigate yet, and "Read" would be a promise the page can't keep. */
+            data-cursor-label={project.status === "shipped" ? "Shipped" : "In build"}
           >
             <div className={styles.cardTop}>
               <span

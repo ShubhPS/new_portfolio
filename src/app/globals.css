@@ -15,7 +15,9 @@
   --color-surface: #121213;
   --color-surface-raised: #17171a;
   --color-text-dim: #9b9b96;
-  --color-text-faint: #5c5c58;
+  /* 4.6:1 on --color-bg. The obvious darker grey looks better but lands at
+     2.97:1, and every HUD label in the design uses this token at 11px. */
+  --color-text-faint: #7a7a76;
 
   /* Hairlines — alpha on the text tone so they sit on any surface */
   --color-line: rgb(242 242 240 / 0.1);

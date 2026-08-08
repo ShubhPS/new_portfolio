@@ -65,28 +65,35 @@ export default function Scene3D() {
 
     let size = 0;
     let raf = 0;
+    // Cached geometry. Reading layout inside the frame loop forces a reflow on
+    // every tick; the box only changes on resize and scroll, so measure there.
+    let box = wrap.getBoundingClientRect();
     let yaw = 0.6;
     let pitch = -0.25;
     let targetYaw = yaw;
     let targetPitch = pitch;
 
+    const measure = () => {
+      box = wrap.getBoundingClientRect();
+    };
+
     const resize = () => {
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      const rect = wrap.getBoundingClientRect();
-      size = Math.min(rect.width, rect.height);
-      canvas.width = Math.round(rect.width * dpr);
-      canvas.height = Math.round(rect.height * dpr);
+      measure();
+      size = Math.min(box.width, box.height);
+      canvas.width = Math.round(box.width * dpr);
+      canvas.height = Math.round(box.height * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     };
     resize();
 
     const observer = new ResizeObserver(resize);
     observer.observe(wrap);
+    window.addEventListener("scroll", measure, { passive: true });
 
     const onMove = (event: PointerEvent) => {
-      const rect = wrap.getBoundingClientRect();
-      const nx = (event.clientX - (rect.left + rect.width / 2)) / rect.width;
-      const ny = (event.clientY - (rect.top + rect.height / 2)) / rect.height;
+      const nx = (event.clientX - (box.left + box.width / 2)) / box.width;
+      const ny = (event.clientY - (box.top + box.height / 2)) / box.height;
       targetYaw = 0.6 + nx * 1.6;
       targetPitch = -0.25 + ny * 1.1;
     };
@@ -95,9 +102,8 @@ export default function Scene3D() {
     const projected = nodes.map(() => ({ x: 0, y: 0, z: 0, scale: 1 }));
 
     const render = () => {
-      const rect = wrap.getBoundingClientRect();
-      const cx = rect.width / 2;
-      const cy = rect.height / 2;
+      const cx = box.width / 2;
+      const cy = box.height / 2;
       const radius = size * 0.36;
 
       if (!reducedMotion) targetYaw += 0.0022;
@@ -123,7 +129,7 @@ export default function Scene3D() {
         projected[i].scale = perspective;
       }
 
-      ctx.clearRect(0, 0, rect.width, rect.height);
+      ctx.clearRect(0, 0, box.width, box.height);
 
       for (const [i, j] of edges) {
         const a = projected[i];
@@ -174,6 +180,7 @@ export default function Scene3D() {
       cancelAnimationFrame(raf);
       observer.disconnect();
       window.removeEventListener("pointermove", onMove);
+      window.removeEventListener("scroll", measure);
     };
   }, [reducedMotion]);
 

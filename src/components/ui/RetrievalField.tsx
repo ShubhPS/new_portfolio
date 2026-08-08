@@ -52,9 +52,16 @@ export default function RetrievalField() {
       return seed / 4294967296;
     };
 
+    // Cached so neither the pointer handler nor the frame loop reads layout.
+    let box = wrap.getBoundingClientRect();
+    const measure = () => {
+      box = wrap.getBoundingClientRect();
+    };
+
     const build = () => {
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      const rect = wrap.getBoundingClientRect();
+      measure();
+      const rect = box;
       width = rect.width;
       height = rect.height;
       canvas.width = Math.round(width * dpr);
@@ -79,9 +86,8 @@ export default function RetrievalField() {
     let t = 0;
 
     const onMove = (event: PointerEvent) => {
-      const rect = wrap.getBoundingClientRect();
-      query.x = event.clientX - rect.left;
-      query.y = event.clientY - rect.top;
+      query.x = event.clientX - box.left;
+      query.y = event.clientY - box.top;
       query.driven = true;
     };
     const onLeave = () => {
@@ -90,6 +96,7 @@ export default function RetrievalField() {
 
     wrap.addEventListener("pointermove", onMove, { passive: true });
     wrap.addEventListener("pointerleave", onLeave);
+    window.addEventListener("scroll", measure, { passive: true });
 
     const resizeObserver = new ResizeObserver(build);
     resizeObserver.observe(wrap);
@@ -174,6 +181,7 @@ export default function RetrievalField() {
       resizeObserver.disconnect();
       wrap.removeEventListener("pointermove", onMove);
       wrap.removeEventListener("pointerleave", onLeave);
+      window.removeEventListener("scroll", measure);
     };
   }, [reducedMotion]);
 
