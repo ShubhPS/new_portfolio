@@ -11,6 +11,9 @@ next-env.d.ts
 
 .DS_Store
 
+# Machine-local Claude Code permissions — not shared config
+.claude/settings.local.json
+
 # Source resume — contains a personal phone number; kept out of the repo
 # so it can't reach a public remote or the deployed build by accident.
 *Resume*.pdf
